@@ -1,12 +1,12 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import morgan from 'morgan';
-import cors from "cors"
-import * as dotenv from 'dotenv';
-import fileUpload from 'express-fileupload';
-import api from './api/index.js';
-import './bot/index.js';
-const __dirname = import.meta.dirname;
+const express = require('express');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const fileUpload = require('express-fileupload');
+const api = require('./api/index.js');
+require('./bot/index.js');
+const path = require('path');
 
 // vars
 const env = dotenv.config().parsed;

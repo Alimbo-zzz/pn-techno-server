@@ -1,11 +1,9 @@
-import nodemailer from "nodemailer";
-import dotenv from 'dotenv';
+const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
 const env = dotenv.config().parsed;
 
 
 
-
-console.log(global.srcRoot);
 
 // ______mailer
 const transporter = nodemailer.createTransport({
@@ -47,6 +45,6 @@ const sendActivationLink = async function(to, link){
 
 
 
-export {
+module.exports = {
 	sendActivationLink
 }

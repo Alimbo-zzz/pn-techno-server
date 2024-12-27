@@ -1,18 +1,16 @@
-import express from 'express';
+const express = require('express');
 const app = express();
 const router = express.Router();
 
-import * as productAPI from './product.js';
-import * as mailAPI from './mail.js';
-import * as botAPI from './bot.js';
+const productAPI = require('./product.js');
+const mailAPI = require('./mail.js');
+const botAPI = require('./bot.js');
 
+router.get(`/api/product-list`, productAPI.list);
+router.post(`/api/product-add`, productAPI.add);
+router.get(`/api/mail-pdf`, mailAPI.sendPDF);
+router.post(`/api/bot-message`, botAPI.sendMessage);
 
-router.get(`/api/product-list`, productAPI.list)
-router.post(`/api/product-add`, productAPI.add)
-router.get(`/api/mail-pdf`, mailAPI.sendPDF)
-router.post(`/api/bot-message`, botAPI.sendMessage)
+app.use(router);
 
-
-app.use(router)
-
-export default app;
+module.exports = app;
