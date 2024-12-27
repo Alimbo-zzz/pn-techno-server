@@ -7,13 +7,15 @@ const fileUpload = require('express-fileupload');
 const api = require('./api/index.js');
 require('./bot/index.js');
 const path = require('path');
+const fs = require('fs');
+const https = require('https');
 
 // vars
 const env = dotenv.config().parsed;
 const app = express();
-const PORT = env.PORT || 2020;
+const PORT = 443;
 const db = env.DB_KEY;
-const ip = 'http://localhost';
+const ip = 'http://185.178.44.78/';
 // data base
 
 mongoose.set("strictQuery", false);
@@ -23,6 +25,10 @@ mongoose.connect(db)
 
 global.srcRoot = __dirname;
 
+const options = {
+  key: fs.readFileSync('./selfsigned.key'),
+  cert: fs.readFileSync('./selfsigned.crt'),
+};
 
 
 // middlewars
@@ -38,7 +44,7 @@ app.use(api)
 
 
 // start server
-app.listen(PORT, (err) => {
-	if(err) return console.log(err);
+
+https.createServer(options, app).listen(PORT, () => {
 	console.log(`server started: ${ip}:${PORT}`)
-})
+});
