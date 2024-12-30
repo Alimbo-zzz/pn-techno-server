@@ -10,10 +10,11 @@ const path = require('path');
 const fs = require('fs');
 const https = require('https');
 
+
 // vars
 const env = dotenv.config().parsed;
 const app = express();
-const PORT = 443;
+const PORT = env.PORT || 2020;
 const db = env.DB_KEY;
 const ip = 'http://185.178.44.78/';
 // data base
@@ -25,10 +26,6 @@ mongoose.connect(db)
 
 global.srcRoot = __dirname;
 
-const options = {
-  key: fs.readFileSync('./selfsigned.key'),
-  cert: fs.readFileSync('./selfsigned.crt'),
-};
 
 
 // middlewars
@@ -38,13 +35,13 @@ app.use(fileUpload()); //позволяет получать formData в зап�
 app.use(express.json()); // позволяет читать json в запросах
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan(':method :url :status :res[content-length] :response-time ms')); // выведение в консоль всех запросов
-app.use('/', express.static('./static') ); // путь для всех элементов
+app.use('/', express.static('./static')); // путь для всех элементов
 app.use(api)
 
 
 
 // start server
-
-https.createServer(options, app).listen(PORT, () => {
+app.listen(PORT, (err) => {
+	if (err) return console.log(err);
 	console.log(`server started: ${ip}:${PORT}`)
-});
+})
