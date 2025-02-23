@@ -1,12 +1,7 @@
 const mongoose = require("mongoose");
 
-const templateSchema = new mongoose.Schema({
-	title: String,
-	content: [String]
-}, { _id: false });
-
-const characteristicSchema = new mongoose.Schema({
-	name: String,
+const statSchema = new mongoose.Schema({
+	tag: String,
 	key: String,
 	value: String
 }, { _id: false });
@@ -16,22 +11,32 @@ const imageSchema = new mongoose.Schema({
 	filename: String
 }, { _id: false });
 
+// const descSchema = new mongoose.Schema({
+// 	value: String,
+// 	details: [String]
+// }, { _id: false });
+
+
+const available = { 
+	type: ['present', 'absent', 'order'], 
+	required: true,
+	default: 'present'
+};
+
+const name = { type: String, required: true };
+
 const scheme = new mongoose.Schema({
-	name: { type: String, required: true },
-	description: String,
+	name,
+	desc: String,
 	brand: String,
 	price: Number,
+	available,
 	preview: imageSchema,
 	images: [imageSchema],
-	available: { 
-			type: ['present', 'absent', 'order'], 
-			required: true,
-			default: 'present'
-	},
 	categories: [String],
 	tags: [String],
-	templates: [templateSchema],
-	characteristics: [characteristicSchema],
+	stats: [statSchema],
+	details: [String]
 }, { virtuals: true, __v: false });
 
 module.exports = mongoose.model('Product', scheme);
