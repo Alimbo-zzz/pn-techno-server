@@ -12,6 +12,7 @@ router.post(`/api/service-add`, serviceAPI.add);
 router.get(`/api/product-list`, productAPI.list);
 router.post(`/api/product-add`, productAPI.add);
 router.get(`/api/mail-pdf`, mailAPI.sendPDF);
+router.post(`/api/send-mail`, mailAPI.sendMail);
 router.post(`/api/bot-message`, botAPI.sendMessage);
 
 app.use(router);

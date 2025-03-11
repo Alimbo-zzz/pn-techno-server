@@ -1,4 +1,5 @@
 const { sendBotMessage } = require("../bot/index.js");
+const { sendSelf } = require("./mail.js");
 
 const sendMessage = async (req, res) => {
     try {
@@ -49,6 +50,7 @@ const sendMessage = async (req, res) => {
             }
         }
 
+        sendSelf({html: content})
         sendBotMessage(content);
         return res.status(200).json({ status: 1 });
     } catch (error) {
